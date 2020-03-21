@@ -2,11 +2,18 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
+	"path/filepath"
 )
 
 type Process struct {
 	pid  int32
 	path string
+}
+
+type procNamespace struct {
+	pid int
+	ipc int
 }
 
 func getCmd(process Process){
@@ -22,7 +29,16 @@ func getCmd(process Process){
 	fmt.Print(string(output))
 }
 
-func getNamespace(process Process){
 
+func getProcessNS(process Process) string{
+	pid := process.pid
+	processPath := fmt.Sprintf("/proc/%d/ns", pid)
 
+	symlink := filepath.Join(processPath, "ipc")
+	target, err := os.Readlink(symlink)
+
+	if err != nil {
+		fmt.Print(err)
+	}
+	return target
 }

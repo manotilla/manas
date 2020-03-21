@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	client "github.com/docker/docker/client"
 )
 
