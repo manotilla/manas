@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"github.com/docker/docker/api/types"
 	client "github.com/docker/docker/client"
 
@@ -26,16 +25,14 @@ func ContainerList() []string{
 	}
 	containerList, err := cli.ContainerList(ctx,listOptions )
 
-	for _, container := range containerList {
-		list := append(containers, container.ID)
-		fmt.Println(list)
+	for i := 0; i < len(containerList); i++ {
+		containerObj := containerList[i]
+		containers = append(containers, containerObj.ID)
 	}
 	return containers
 }
 
-func getContainerPid(container Container) int {
-
-	objectId := container.Id
+func getContainerPid(containerId string) int {
 
 	ctx := context.Background()
 	cli, err := client.NewClientWithOpts(client.FromEnv, client.WithAPIVersionNegotiation())
@@ -43,7 +40,7 @@ func getContainerPid(container Container) int {
 		panic(err)
 	}
 
-	containerInspect, err := cli.ContainerInspect(ctx,objectId)
+	containerInspect, err := cli.ContainerInspect(ctx,containerId)
 
 	return containerInspect.State.Pid
 }
