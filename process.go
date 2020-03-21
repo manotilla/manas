@@ -8,7 +8,6 @@ import (
 
 type Process struct {
 	pid  int32
-	path string
 }
 
 type procNamespace struct {
@@ -18,9 +17,8 @@ type procNamespace struct {
 
 func getCmd(process Process){
 	pid := process.pid
-	path := process.path
 
-	file := fmt.Sprintf("%s/%d/cmdline", path, pid)
+	file := fmt.Sprintf("/proc/%d/cmdline", pid)
 	output, err := ioutil.ReadFile(file)
 
 	if err != nil {
