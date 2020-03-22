@@ -54,7 +54,17 @@ func searchFullProc(){
 	for _, f := range files {
 
 		if _, err := strconv.Atoi(f.Name()); err == nil {
-			fmt.Print(f.Name())
+			pid := f.Name()
+
+			n, _ := strconv.Atoi(pid)
+
+			objectProcess := Process{n}
+
+			cmd := getCmd(objectProcess)
+			ns := getProcessNS(objectProcess)
+
+			object := CompareObj{cmd: cmd, ipc: ns, pid: objectProcess.pid}
+			fmt.Print(object)
 		}
 	}
 }

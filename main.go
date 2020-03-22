@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /*
 import (
 	"fmt"
@@ -13,12 +15,12 @@ type CompareObj struct {
 
 func main()  {
 
-	searchFullProc()
 
-	/*
 	containers := ContainerList()
 
 	j := 0
+
+	go 	searchFullProc()
 
 	for range containers {
 		containerPid := getContainerPid(containers[j])
@@ -32,6 +34,4 @@ func main()  {
 		fmt.Print(object)
 		j++
 	}
-
-	 */
 }
