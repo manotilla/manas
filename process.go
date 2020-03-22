@@ -2,8 +2,10 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 )
 
 type Process struct {
@@ -40,4 +42,19 @@ func getProcessNS(process Process) string{
 		fmt.Print(err)
 	}
 	return target
+}
+
+func searchFullProc(){
+	files, err := ioutil.ReadDir("/proc/")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, f := range files {
+
+		if _, err := strconv.Atoi(f.Name()); err == nil {
+			fmt.Print(f.Name())
+		}
+	}
 }

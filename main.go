@@ -1,8 +1,9 @@
 package main
 
+/*
 import (
 	"fmt"
-)
+)*/
 
 type CompareObj struct {
 	cmd string
@@ -10,9 +11,11 @@ type CompareObj struct {
 	pid int
 }
 
-
 func main()  {
 
+	searchFullProc()
+
+	/*
 	containers := ContainerList()
 
 	j := 0
@@ -28,7 +31,7 @@ func main()  {
 
 		fmt.Print(object)
 		j++
-
 	}
 
+	 */
 }
