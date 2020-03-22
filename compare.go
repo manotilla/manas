@@ -1,9 +1,9 @@
 package main
 
 type CompareObj struct {
-	cmd string
-	ipc string
-	pid int
+	cmd string `bson:"cmd"`
+	ipc string `bson:"ipc"`
+	pid int `bson:"pid"`
 }
 
 type CompareMap struct {
