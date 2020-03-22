@@ -6,6 +6,10 @@ type CompareObj struct {
 	pid int
 }
 
+type CompareMap struct {
+	compareObj []CompareObj
+}
+
 func generateCompareObject(objectProcess Process) CompareObj{
 
 	cmd := getCmd(objectProcess)

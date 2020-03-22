@@ -7,9 +7,11 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
+	"strings"
 	"time"
 )
 func main()  {
+	var containerPids []string
 
 	client, err := mongo.NewClient(options.Client().ApplyURI("mongodb://localhost:27017"))
 	if err != nil {
@@ -27,51 +29,51 @@ func main()  {
 
 	containers := ContainerList()
 	procList   := SearchFullProc()
-	j := 0
+
+	container_terator := 0
 
 
 
 	for range containers {
-		containerPid := getContainerPid(containers[j])
+		containerPid := getContainerPid(containers[container_terator])
 
 		objectProcess := Process{containerPid}
 		obj := generateCompareObject(objectProcess)
-		fmt.Print(obj)
 
-		containerProcessList, err := processCollection.InsertOne(ctx, bson.D{
-			{"pid", obj.pid},
-			{"ipc", obj.ipc},
-			{"cmd", obj.cmd},
-		})
+		containerPids = append(containerPids, obj.ipc)
 
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		fmt.Print(containerProcessList.InsertedID)
-
-		j++
+		container_terator++
 	}
 
-	k := 0
+	process_iterator := 0
 
 	for range procList {
 
-		objectProcess := Process{procList[k]}
+		objectProcess := Process{procList[process_iterator]}
 		mainPid := generateCompareObject(objectProcess)
 		fmt.Print(mainPid)
 
-		mainPidList, err := processCollection.InsertOne(ctx, bson.D{
-			{"pid", mainPid.pid},
-			{"ipc", mainPid.ipc},
-			{"cmd", mainPid.cmd},
-		})
-		if err != nil {
-			log.Fatal(err)
+
+		if strings.Contains(strings.Join(containerPids, ","), mainPid.ipc) {
+			mainPidList, err := processCollection.InsertOne(ctx, bson.D{
+				{"pid", mainPid.pid},
+				{"ipc", mainPid.ipc},
+				{"cmd", mainPid.cmd},
+				{"is_container", true},
+
+			})
+			fmt.Print(mainPidList.InsertedID)
+
+			if err != nil {
+				log.Fatal(err)
+			}
+
+		}else{
+
+			fmt.Print("Operating System Process")
 		}
 
-		fmt.Print(mainPidList.InsertedID)
-		k++
+		process_iterator++
 	}
 
 
