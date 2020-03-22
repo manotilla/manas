@@ -44,7 +44,9 @@ func getProcessNS(process Process) string{
 	return target
 }
 
-func searchFullProc(){
+func SearchFullProc() []int{
+	var fullPids []int
+
 	files, err := ioutil.ReadDir("/proc/")
 
 	if err != nil {
@@ -55,16 +57,10 @@ func searchFullProc(){
 
 		if _, err := strconv.Atoi(f.Name()); err == nil {
 			pid := f.Name()
-
 			n, _ := strconv.Atoi(pid)
-
-			objectProcess := Process{n}
-
-			cmd := getCmd(objectProcess)
-			ns := getProcessNS(objectProcess)
-
-			object := CompareObj{cmd: cmd, ipc: ns, pid: objectProcess.pid}
-			fmt.Print(object)
+			fullPids = append(fullPids, n)
 		}
 	}
+	return fullPids
 }
+
