@@ -1,21 +1,34 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
+
+type CompareObj struct {
+	cmd string
+	ipc string
+	pid int
+}
+
 
 func main()  {
 
 	containers := ContainerList()
-	fmt.Print(containers)
 
 	j := 0
+
 	for range containers {
 		containerPid := getContainerPid(containers[j])
-		fmt.Print(containerPid)
+
+		objectProcess := Process{containerPid}
+		cmd := getCmd(objectProcess)
+		ns := getProcessNS(objectProcess)
+
+		object := CompareObj{cmd: cmd, ipc: ns, pid: objectProcess.pid}
+
+		fmt.Print(object)
 		j++
+
 	}
-	/*
-	container := Container{"766f780fdeac"}
-	getCmd(objectProcess) //procFS()
-	objectProcess := Process{4209}
-*/
+
 }

@@ -7,15 +7,15 @@ import (
 )
 
 type Process struct {
-	pid  int32
+	pid  int
 }
 
-type procNamespace struct {
+type ProcNamespace struct {
 	pid int
 	ipc int
 }
 
-func getCmd(process Process){
+func getCmd(process Process) string{
 	pid := process.pid
 
 	file := fmt.Sprintf("/proc/%d/cmdline", pid)
@@ -24,7 +24,8 @@ func getCmd(process Process){
 	if err != nil {
 		fmt.Print(err)
 	}
-	fmt.Print(string(output))
+
+	return string(output)
 }
 
 
