@@ -6,10 +6,10 @@ app = Flask(__name__)
 @app.route("/processes", methods=['GET'])
 def processes():
 
-    container_pid = request.args.getlist('container_pid', type=str)
-    data = getIPCProcesses(ipc)
-
+    ipc = request.args.getlist('container_pid', type=str)
+    data = getIPCProcesses("{}".format(ipc[0]))
     response_map = {"processes": data}
+
     return jsonify(response_map)
 
 
