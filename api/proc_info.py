@@ -18,11 +18,6 @@ def getIPCProcesses(ipc):
 
     return data
 
-def generateProcResponse():
-
-    return ["29e4110398ac", "51c396f0d899"]
-
-
 
 def generateProcResponse():
 
