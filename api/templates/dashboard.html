@@ -166,8 +166,8 @@ right connector from last child*/
 }
 
 .tree ul ul ul li img {
-  margin:0;
-  padding:0;
+  margin:20;
+  padding:10;
   padding-right:3px;
 }
 
@@ -175,11 +175,12 @@ right connector from last child*/
 
 .tree li a{
   border: 1px solid #ccc;
-  padding: 5px 10px;
+  padding: 5px 30px;
   text-decoration: none;
   color: #666;
   font-family: 'Fira Sans', sans-serif;
   font-size: 12px;
+  margin-left: 20em;
   display: inline-block;
   
   border-radius: 5px;
@@ -226,12 +227,12 @@ right connector from last child*/
   <div class="tree">
     <ul>
       <li>
-      <a href="#"><img src="http://placehold.it/110x110" alt="CEO">
+      <a href="#"><img src="/static/img/container.png" width="110" height="100" alt="CEO">
     {{process.ipc}}</a>
         <ul>
             <ul>
               {% for proc in process.processes %}
-                <li><a href="#"><img src="http://placehold.it/25x25" alt="">{{proc}}</img></a></li>
+                <li><a><img alt="Process" src="/static/img/process.png" width="25" height="25">{{proc}}</img></a></li>
               {% endfor %}   
             </ul>
           </li>
